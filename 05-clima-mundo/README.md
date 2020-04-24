@@ -5,4 +5,4 @@
 
 https://home.openweathermap.org/
 
-https://devru-latitude-longitude-find-v1.p.rapidapi.com/
+https://rapidapi.com/dev132/api/city-geo-location-lookup?endpoint=54954257e4b0415c068d5262
