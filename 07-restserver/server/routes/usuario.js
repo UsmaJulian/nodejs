@@ -2,10 +2,13 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 const Usuario = require('../models/usuario_model');
+const { verificaToken, verificaAdmin_Role } = require('../middlewares/autenticacion');
+
+
 const app = express();
 
 
-app.get('/usuario', function(req, res) {
+app.get('/usuario', verificaToken, (req, res) => {
     let desde = req.query.desde || 0;
     desde = Number(desde);
 
@@ -22,7 +25,7 @@ app.get('/usuario', function(req, res) {
                     err
                 });
             }
-            Usuario.count({ estado: true }, (err, conteo) => {
+            Usuario.countDocuments({ estado: true }, (err, conteo) => {
 
                 res.json({
                     ok: true,
@@ -36,8 +39,10 @@ app.get('/usuario', function(req, res) {
 
     //res.json('get Usuario local');
 });
+
+
 //crear nuevos registros post
-app.post('/usuario', (req, res) => {
+app.post('/usuario', [verificaToken, verificaAdmin_Role], (req, res) => {
     // res.json('post Usuario local');
     let body = req.body;
 
@@ -74,14 +79,16 @@ app.post('/usuario', (req, res) => {
     // }
 
 });
-app.put('/usuario/:id', function(req, res) {
+app.put('/usuario/:id', [verificaToken, verificaAdmin_Role], (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
     Usuario.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, usuarioDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
-                err
+                err: {
+                    error: 'Token no válido'
+                }
             });
 
 
@@ -127,7 +134,7 @@ app.put('/usuario/:id', function(req, res) {
 //     //res.json('delete Usuario');
 // });
 // CAMBIAR EL ESTADO 
-app.delete('/usuario/:id', function(req, res) {
+app.delete('/usuario/:id', [verificaToken, verificaAdmin_Role], (req, res) => {
     let id = req.params.id;
 
     let cambiaEstado = {

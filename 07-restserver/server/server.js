@@ -1,4 +1,4 @@
-require('./config/config');
+require('./config/config.js');
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -14,7 +14,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-app.use(require('./routes/usuario'));
+
+//configuración global de las rutas de acceso 
+app.use(require('./routes/index'));
+// app.use(require('./routes/login'));
 
 
 

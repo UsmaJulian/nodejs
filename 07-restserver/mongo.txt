@@ -1,0 +1,15 @@
+
+user: julianU
+
+pass:JID5VNkb2ObNg3cr
+
+URL
+mongodb+srv://julianU:JID5VNkb2ObNg3cr@cluster0-ccsha.mongodb.net/cafe
+
+
+//heroku variables 
+
+heroku config                                => muestra todas las variables 
+
+
+heroku config:set Nombredelavariable=""      =>crea la variable
