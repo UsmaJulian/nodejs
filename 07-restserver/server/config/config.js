@@ -15,7 +15,7 @@ VENCIMIENTO DEL TOKEN
 24 HORAS
 30 DIAS
 */
-process.env.CADUCIDAD_TOKEN = 60 * 60 * 24 * 30;
+process.env.CADUCIDAD_TOKEN = '48h';
 
 /* 
 SEED DE AUTENTIFICACIÓN (se crea en heroku una variable)
